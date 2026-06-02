@@ -1,0 +1,19 @@
+services:
+  game_dev:
+    build:
+      context: .
+      args:
+        - UID=1000
+        - GID=1000
+    # Map Vite port so Windows (Electron Runner) can see it
+    ports:
+      - "5173:5173"
+    volumes:
+      # Map current directory to /app in container
+      - .:/app
+    container_name: harry_gamedev
+    hostname: harry-dev
+    # Keep container alive
+    tty: true
+    # npm install on startup – installs to mounted host directory
+    command: bash -c "npm install && exec bash"
