@@ -16,7 +16,7 @@ import {TreeProcessor} from "./engine/core/TreeProcessor.ts";
 const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
 
 // Set alpha: false for better performance (assuming the game is not transparent)
-const gl = canvas.getContext('webgl2', {alpha: false});
+const gl = canvas.getContext('webgl2', {alpha: false}) as WebGL2RenderingContext;
 if (!gl) {
     throw new Error("Error: Your browser does not support WebGL2!");
 }
