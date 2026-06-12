@@ -9,7 +9,6 @@ import {
     RunningGameContainerNode
 } from "./game/nodes/RunningGameContainerNode.ts";
 import {MenuContainerNode} from "./game/nodes/MenuContainerNode.ts";
-import {BaseNode} from "./engine/core/BaseNode.ts";
 import {TreeProcessor} from "./engine/core/TreeProcessor.ts";
 
 // 1. WebGL2 Initialization
@@ -55,6 +54,7 @@ const runningGameContainer = new RunningGameContainerNode();
 
 // Add game map (has its own buffer)
 const map = new GameMapNode();
+map.init(gl)
 runningGameContainer.addChild(map);
 
 // Add user interface (has its own buffer, sits above the map)
@@ -99,7 +99,6 @@ function loop(time: number) {
     // Zlecenie wyrysowania kolejnej klatki
     requestAnimationFrame(loop);
 }
-
 
 
 // Start pętli

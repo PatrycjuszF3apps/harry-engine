@@ -1,6 +1,7 @@
 import {Compositor} from '../../engine/graphics/Compositor';
 import {Input} from '../../engine/core/Input';
 import {BaseSpriteNode} from "../../engine/core/BaseSpriteNode.ts";
+import {WebGLUtils} from "../../engine/graphics/WebGLUtils.ts";
 
 export class SpriteNode extends BaseSpriteNode {
     private time = 0;
@@ -9,6 +10,15 @@ export class SpriteNode extends BaseSpriteNode {
     constructor() {
         super("sprite", true);
 
+    }
+
+    async loadAssets(gl: WebGL2RenderingContext) {
+        try {
+            this.texture = await WebGLUtils.loadTexture(gl, '../../assets/cat.png');
+            console.log("Cat texture loaded successfully!");
+        } catch (error) {
+            console.error("Error loading cat texture:", error);
+        }
     }
 
     protected selfLogic(dt: number): void {
@@ -26,10 +36,15 @@ export class SpriteNode extends BaseSpriteNode {
     }
 
     protected selfRender(gl: WebGL2RenderingContext, compositor: Compositor, matrix: Float32Array): void {
-        const g = (Math.sin(this.time * 2) + 1) / 2;
+
+        if (this.texture) {
+            // Wykorzystujemy "uładowaną" metodę z Compositora
+            compositor.drawTexture(this.texture, matrix);
+        }
+
+        /*const g = (Math.sin(this.time * 2) + 1) / 2;
         gl.clearColor(0.0, 0.5 * g, 0.0, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        //compositor.drawRect(1, 0, 0, 1, matrix);
+        gl.clear(gl.COLOR_BUFFER_BIT);*/
     }
 
 

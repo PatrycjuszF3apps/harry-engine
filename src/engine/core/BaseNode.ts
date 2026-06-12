@@ -1,9 +1,10 @@
 import {Compositor} from '../graphics/Compositor';
 import {WebGLUtils} from '../graphics/WebGLUtils';
-import {NodeInterface} from 'Interface/NodeInterface';
+
 import {HookPhase} from "./Enum/HookPhase.ts";
 import {TreeProcessor} from "./TreeProcessor.ts";
 import {TreeHook} from "./Types/TreeHook.ts";
+import {NodeInterface} from "./Interface/NodeInterface.ts";
 
 
 export abstract class BaseNode implements NodeInterface {
@@ -11,8 +12,7 @@ export abstract class BaseNode implements NodeInterface {
     public parent: BaseNode | null = null;
     public children: BaseNode[] = [];
     public id: string;
-    public treeProcessor: TreeProcessor;
-
+    public treeProcessor: TreeProcessor | null = null;
     visible = true;
     active = true;
     destroyed = false;
@@ -22,6 +22,8 @@ export abstract class BaseNode implements NodeInterface {
     public y: number = 0;
     public width: number = 100;
     public height: number = 100;
+
+    public texture: WebGLTexture | null = null;
 
     // Buffering
     protected _useOwnBuffer: boolean = false;
@@ -104,7 +106,7 @@ export abstract class BaseNode implements NodeInterface {
             const parentMatrix = this.computeTransformMatrixForParent(screenW, screenH);
 
             if (this._texture) {
-                compositor.drawTexture(this._texture, this.x, this.y, this.width, this.height, parentMatrix);
+                compositor.drawTexture(this._texture, parentMatrix);
             }
         }
     }

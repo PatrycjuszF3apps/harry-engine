@@ -37,7 +37,7 @@ export class GameTitleNode extends BaseNode {
 
         if (this._titleTexture) {
             // Draw title texture on top
-            compositor.drawTexture(this._titleTexture, 0, 0, this.width, this.height, matrix);
+            compositor.drawTexture(this._titleTexture, matrix);
         }
     }
 

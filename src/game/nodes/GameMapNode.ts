@@ -8,8 +8,18 @@ export class GameMapNode extends BaseNode {
     constructor() {
         super("game_map", true);
 
-        for (let i = 0; i < 4; i++) {
+
+
+
+        //const map = new GameMapNode();
+        //runningGameContainer.addChild(map);
+
+    }
+
+    public init(gl: WebGL2RenderingContext){
+        for (let i = 0; i < 40; i++) {
             const sprite = new SpriteNode()
+            sprite.loadAssets(gl)
             sprite.width = this.getRandomInt(50, 300);
             sprite.height = this.getRandomInt(50, 300);
             sprite.x = this.getRandomInt(0, 2000);
@@ -18,11 +28,6 @@ export class GameMapNode extends BaseNode {
             this.addChild(sprite);
 
         }
-
-
-        //const map = new GameMapNode();
-        //runningGameContainer.addChild(map);
-
     }
 
     private getRandomInt(min, max): number {
@@ -31,7 +36,7 @@ export class GameMapNode extends BaseNode {
         return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
     }
 
-    protected selfLogic(dt: number): void {
+    public selfLogic(dt: number): void {
         /*this.time += dt;
 
         if (Input.isDown('ArrowLeft')){
