@@ -64,5 +64,5 @@ Desktop.ini
 .gemini
 .opencode/
 .opencode
-agent_workspace/
+agent_workspace/*
 agent_workspace
