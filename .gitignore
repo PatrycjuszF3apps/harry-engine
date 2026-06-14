@@ -56,3 +56,13 @@ coverage
 Thumbs.db  
 ehthumbs.db  
 Desktop.ini
+
+
+.claude/
+.claude
+.gemini/
+.gemini
+.opencode/
+.opencode
+agent_workspace/
+agent_workspace
