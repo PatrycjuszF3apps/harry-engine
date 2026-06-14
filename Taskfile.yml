@@ -1,0 +1,39 @@
+# https://taskfile.dev
+version: '3'
+
+vars:
+  EXEC_APP: docker compose exec -u harry game_dev
+
+tasks:
+  build:
+    desc: Rebuild all images and recreate containers
+    cmds:
+      - docker compose build --no-cache
+      - docker compose up -d
+
+  up:
+    desc: Start service
+    cmd: docker compose up -d
+
+  down:
+    desc: Stop and remove all containers
+    cmd: docker compose down
+  
+  stop:
+    desc: Stop containers
+    cmd: docker compose stop
+
+  restart:
+    desc: Recreate and restart all services (picks up config changes)
+    cmd: docker compose up -d --force-recreate
+
+  run:
+    desc: run app
+    interactive: true
+    cmd: "{{.EXEC_APP}} npm run dev"
+
+  shell:
+    desc: Open shell in app container
+    interactive: true
+    cmd: "{{.EXEC_APP}} bash"
+
