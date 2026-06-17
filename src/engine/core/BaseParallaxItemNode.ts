@@ -2,7 +2,7 @@ import {BaseNode} from './BaseNode.ts';
 import {Compositor} from '../graphics/Compositor.ts';
 
 
-export class BaseSpriteNode extends BaseNode {
+export class BaseParallaxItemNode extends BaseNode {
     protected selfLogic(dt: number): void {
 
 

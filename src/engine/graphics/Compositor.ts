@@ -1,6 +1,8 @@
-import { WebGLUtils } from './WebGLUtils';
+import {WebGLUtils} from './WebGLUtils';
 
 export class Compositor {
+    private _viewPortWidth: number;
+    private _viewPortHeight: number;
     private gl: WebGL2RenderingContext;
     private program: WebGLProgram;
 
@@ -15,6 +17,8 @@ export class Compositor {
 
     constructor(gl: WebGL2RenderingContext) {
         this.gl = gl;
+        this._viewPortWidth = gl.canvas.width;
+        this._viewPortHeight = gl.canvas.height;
 
         const vsSource = `#version 300 es
         in vec2 a_position;
@@ -60,8 +64,8 @@ export class Compositor {
         const positionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-            0, 0,  1, 0,  0, 1,
-            0, 1,  1, 0,  1, 1,
+            0, 0, 1, 0, 0, 1,
+            0, 1, 1, 0, 1, 1,
         ]), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(this.aPositionLoc);
         gl.vertexAttribPointer(this.aPositionLoc, 2, gl.FLOAT, false, 0, 0);
@@ -69,8 +73,8 @@ export class Compositor {
         const texCoordBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-            0, 1,  1, 1,  0, 0,
-            0, 0,  1, 1,  1, 0,
+            0, 1, 1, 1, 0, 0,
+            0, 0, 1, 1, 1, 0,
         ]), gl.STATIC_DRAW);
         gl.enableVertexAttribArray(this.aTexCoordLoc);
         gl.vertexAttribPointer(this.aTexCoordLoc, 2, gl.FLOAT, false, 0, 0);
@@ -107,5 +111,14 @@ export class Compositor {
         this.gl.uniform1i(this.uUseTextureLoc, 0);
 
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+    }
+
+
+    public get viewPortWidth(): number {
+        return this._viewPortWidth;
+    }
+
+    public get viewPortHeight(): number {
+        return this._viewPortHeight;
     }
 }

@@ -1,6 +1,6 @@
 import {Compositor} from './engine/graphics/Compositor';
 import {HarryRoot} from './game/nodes/HarryRoot';
-import {GameMapNode} from './game/nodes/GameMapNode';
+import {ParallaxContainerNode} from './game/nodes/ParallaxContainerNode.ts';
 import {UINode} from './game/nodes/UINode';
 import {GameTitleNode} from './game/nodes/GameTitleNode';
 import {Input} from './engine/core/Input';
@@ -53,9 +53,9 @@ root.height = canvas.height;
 const runningGameContainer = new RunningGameContainerNode();
 
 // Add game map (has its own buffer)
-const map = new GameMapNode();
-map.init(gl)
-runningGameContainer.addChild(map);
+const parallaxContainer = new ParallaxContainerNode();
+parallaxContainer.init(gl, compositor)
+runningGameContainer.addChild(parallaxContainer);
 
 // Add user interface (has its own buffer, sits above the map)
 const ui = new UINode();

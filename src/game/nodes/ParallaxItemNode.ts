@@ -1,9 +1,9 @@
 import {Compositor} from '../../engine/graphics/Compositor';
 import {Input} from '../../engine/core/Input';
-import {BaseSpriteNode} from "../../engine/core/BaseSpriteNode.ts";
+import {BaseParallaxItemNode} from "../../engine/core/BaseParallaxItemNode.ts";
 import {WebGLUtils} from "../../engine/graphics/WebGLUtils.ts";
 
-export class SpriteNode extends BaseSpriteNode {
+export class ParallaxItemNode extends BaseParallaxItemNode {
     private time = 0;
     protected speed = 300; // pixels per second
 
@@ -12,14 +12,7 @@ export class SpriteNode extends BaseSpriteNode {
 
     }
 
-    async loadAssets(gl: WebGL2RenderingContext) {
-        try {
-            this.texture = await WebGLUtils.loadTexture(gl, '../../assets/cat.png');
-            console.log("Cat texture loaded successfully!");
-        } catch (error) {
-            console.error("Error loading cat texture:", error);
-        }
-    }
+
 
     protected selfLogic(dt: number): void {
         this.time += dt;
