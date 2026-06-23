@@ -66,3 +66,5 @@ Desktop.ini
 .opencode
 agent_workspace/*
 agent_workspace
+
+local/
