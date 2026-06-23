@@ -68,3 +68,4 @@ agent_workspace/*
 agent_workspace
 
 local/
+./*.local
