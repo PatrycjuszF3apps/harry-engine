@@ -1,5 +1,5 @@
 # Dockerfile – Ubuntu 24.04 – Node.js Game Dev Environment
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 # Arguments from .env
 ARG UID=1000
