@@ -1,11 +1,11 @@
-import {Compositor} from '../../engine/graphics/Compositor';
-import {Input} from '../../engine/core/Input';
-import {BaseParallaxItemNode} from "../../engine/core/BaseParallaxItemNode.ts";
-import {WebGLUtils} from "../../engine/graphics/WebGLUtils.ts";
+import {BaseNode} from "../../BaseNode.ts";
+import {Input} from "../../Input.ts";
+import {Compositor} from "../../../graphics/Compositor.ts";
 
-export class ParallaxItemNode extends BaseParallaxItemNode {
+
+export class ParallaxItemNode extends BaseNode {
     private time = 0;
-    protected speed = 300; // pixels per second
+    public speed = 300; // pixels per second
 
     constructor() {
         super("sprite", true);
@@ -13,8 +13,7 @@ export class ParallaxItemNode extends BaseParallaxItemNode {
     }
 
 
-
-    protected selfLogic(dt: number): void {
+    public selfLogic(dt: number): void {
         this.time += dt;
 
         if (Input.isDown('ArrowLeft')) {

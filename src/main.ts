@@ -1,15 +1,17 @@
 import {Compositor} from './engine/graphics/Compositor';
 import {HarryRoot} from './game/nodes/HarryRoot';
-import {ParallaxContainerNode} from './game/nodes/ParallaxContainerNode.ts';
 import {UINode} from './game/nodes/UINode';
 import {GameTitleNode} from './game/nodes/GameTitleNode';
 import {Input} from './engine/core/Input';
 import './style.css';
 import {
     RunningGameContainerNode
-} from "./game/nodes/RunningGameContainerNode.ts";
-import {MenuContainerNode} from "./game/nodes/MenuContainerNode.ts";
+} from "./game/nodes/RunningGameContainerNode";
+import {MenuContainerNode} from "./game/nodes/MenuContainerNode";
 import {TreeProcessor} from "./engine/core/TreeProcessor.ts";
+import {
+    ParallaxContainerNode
+} from "./engine/core/Nodes/Parallax/ParallaxContainerNode.ts";
 
 // 1. WebGL2 Initialization
 const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
@@ -54,7 +56,12 @@ const runningGameContainer = new RunningGameContainerNode();
 
 // Add game map (has its own buffer)
 const parallaxContainer = new ParallaxContainerNode();
+
+
 parallaxContainer.init(gl, compositor)
+
+
+
 runningGameContainer.addChild(parallaxContainer);
 
 // Add user interface (has its own buffer, sits above the map)

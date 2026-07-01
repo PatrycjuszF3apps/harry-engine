@@ -1,14 +1,12 @@
-import {BaseNode} from '../../engine/core/BaseNode.ts';
-import {Compositor} from '../../engine/graphics/Compositor';
-import {Input} from '../../engine/core/Input';
+import {BaseNode} from "../../BaseNode.ts";
+import {Compositor} from "../../../graphics/Compositor.ts";
+import {Asset} from "../../../assets/Asset.ts";
+import {AssetFactory} from "../../../assets/AssetFactory.ts";
 import {ParallaxItemNode} from "./ParallaxItemNode.ts";
-import {
-    BaseParallaxContainerNode
-} from "../../engine/core/Nodes/BaseParallaxContainerNode.ts";
-import {BaseParallaxItemNode} from "../../engine/core/BaseParallaxItemNode.ts";
-import {WebGLUtils} from "../../engine/graphics/WebGLUtils.ts";
+import {WebGLUtils} from "../../../graphics/WebGLUtils.ts";
 
-export class ParallaxContainerNode extends BaseParallaxContainerNode {
+
+export class ParallaxContainerNode extends BaseNode {
     private _compositor: Compositor;
     private _viewPortWidth: number;
     private _viewPortHeight: number;
@@ -27,28 +25,35 @@ export class ParallaxContainerNode extends BaseParallaxContainerNode {
         this._viewPortWidth = compositor.viewPortWidth;
         this._viewPortHeight = compositor.viewPortHeight;
 
+        const assets: Asset[] = []
+        const baseLocation = '../../assets/parallax/'
+        for (let i = 1; i < 40; i++) {
+            const resourceUrl = baseLocation + i.toString() + '_900px.png'
+            assets.push(AssetFactory.create(resourceUrl))
+        }
 
-        for (let i = 0; i < 73; i++) {
+        assets.forEach((asset) => {
+            console.log(asset)
             const parallaxItemNode = new ParallaxItemNode()
-            this.loadAssets(parallaxItemNode, gl, i)
+            this.loadTexture(parallaxItemNode, gl, asset)
             parallaxItemNode.width = this.getRandomInt(50, 300);
             parallaxItemNode.height = this.getRandomInt(50, 300);
             parallaxItemNode.x = this.getRandomInt(0, 2000);
             parallaxItemNode.y = this.getRandomInt(0, 1000);
             parallaxItemNode.speed = this.getRandomInt(100, 1000);
             this.addChild(parallaxItemNode);
+        })
 
-        }
     }
 
-    async loadAssets(item: BaseParallaxItemNode, gl: WebGL2RenderingContext, number: number) {
+    async loadTexture(item: ParallaxItemNode, gl: WebGL2RenderingContext, asset: Asset) {
         try {
-            item.texture = await WebGLUtils.loadTexture(gl, '../../assets/parallax/' + number.toString() + '.png');
-            console.log("Cat texture loaded successfully!");
+            item.texture = await WebGLUtils.loadTexture(gl, asset._resourceUrl);
         } catch (error) {
-            console.error("Error loading cat texture:", error);
+            console.error("Error loading texture:", error);
         }
     }
+
 
     private getRandomInt(min, max): number {
         const minCeiled = Math.ceil(min);
