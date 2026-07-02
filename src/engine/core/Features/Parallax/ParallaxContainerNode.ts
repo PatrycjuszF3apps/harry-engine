@@ -1,10 +1,11 @@
 import {BaseNode} from "../../BaseNode.ts";
 import {Compositor} from "../../../graphics/Compositor.ts";
-import {Asset} from "../../../assets/Asset.ts";
-import {AssetFactory} from "../../../assets/AssetFactory.ts";
 import {ParallaxItemNode} from "./ParallaxItemNode.ts";
 import {WebGLUtils} from "../../../graphics/WebGLUtils.ts";
+import {AssetCollectionBuilder} from "../../Assets/AssetCollectionBuilder.ts";
 
+import {ParallaxMetaSchema, ParallaxItemAssetInterface} from './ParallaxMeta.ts'
+import {Asset} from "../../Assets/Asset.ts";
 
 export class ParallaxContainerNode extends BaseNode {
     private _compositor: Compositor;
@@ -25,15 +26,31 @@ export class ParallaxContainerNode extends BaseNode {
         this._viewPortWidth = compositor.viewPortWidth;
         this._viewPortHeight = compositor.viewPortHeight;
 
-        const assets: Asset[] = []
-        const baseLocation = '../../assets/parallax/'
-        for (let i = 1; i < 40; i++) {
-            const resourceUrl = baseLocation + i.toString() + '_900px.png'
-            assets.push(AssetFactory.create(resourceUrl))
-        }
 
-        assets.forEach((asset) => {
-            console.log(asset)
+
+        const parallaxJsons = import.meta.glob('../../../../../assets/parallax/*.json', {
+            eager: true,
+            import: 'default'
+        });
+        const parallaxImages = import.meta.glob('../../../../../assets/parallax/*.png', {
+            eager: true,
+            import: 'default'
+        });
+
+        console.log(parallaxImages, parallaxJsons)
+
+
+        const parallaxAssets = AssetCollectionBuilder.build<ParallaxItemAssetInterface>(
+            parallaxJsons,
+            parallaxImages,
+            ParallaxMetaSchema,
+            '.png'
+        );
+
+
+        parallaxAssets.forEach(asset => {
+            // TS knows that asset.meta is not null (because it passed through Zod) and has 'building_height'
+            console.log(`Zasób ${asset.resourceUrl} ma budynek o wysokości: ${asset.meta?.building_height}`);
             const parallaxItemNode = new ParallaxItemNode()
             this.loadTexture(parallaxItemNode, gl, asset)
             parallaxItemNode.width = this.getRandomInt(50, 300);
@@ -42,7 +59,7 @@ export class ParallaxContainerNode extends BaseNode {
             parallaxItemNode.y = this.getRandomInt(0, 1000);
             parallaxItemNode.speed = this.getRandomInt(100, 1000);
             this.addChild(parallaxItemNode);
-        })
+        });
 
     }
 

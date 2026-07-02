@@ -11,7 +11,8 @@ import {MenuContainerNode} from "./game/nodes/MenuContainerNode";
 import {TreeProcessor} from "./engine/core/TreeProcessor.ts";
 import {
     ParallaxContainerNode
-} from "./engine/core/Nodes/Parallax/ParallaxContainerNode.ts";
+} from "./engine/core/Features/Parallax/ParallaxContainerNode.ts";
+
 
 // 1. WebGL2 Initialization
 const canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;

@@ -1,18 +1,17 @@
-export class Asset {
+export class Asset<T = unknown> {
     readonly _resourceUrl: string
-    readonly _meta: Object | null
+    readonly _meta: T | null
 
-    constructor(resourceUrl: string, meta: Object | null) {
+    constructor(resourceUrl: string, meta: T | null) {
         this._resourceUrl = resourceUrl
         this._meta = meta
     }
-
 
     get resourceUrl(): string {
         return this._resourceUrl;
     }
 
-    get meta(): Object | null {
+    get meta(): T | null {
         return this._meta;
     }
 }

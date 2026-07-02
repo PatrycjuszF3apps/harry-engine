@@ -30,7 +30,6 @@ export class ParallaxItemNode extends BaseNode {
     protected selfRender(gl: WebGL2RenderingContext, compositor: Compositor, matrix: Float32Array): void {
 
         if (this.texture) {
-            // Wykorzystujemy "uładowaną" metodę z Compositora
             compositor.drawTexture(this.texture, matrix);
         }
 
